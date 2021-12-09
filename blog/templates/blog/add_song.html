@@ -1,0 +1,56 @@
+<style>
+    .song_form{
+        position: absolute;
+        top: 10px;
+        left: 50px;
+        transform: translate(50%, 50%);
+        width: 40%;
+        border-radius: 10px;
+        background-color: #f2f2f2;
+        padding: 20px;
+    }
+    input[type = text],input[type = datetime], select{
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px;
+        display: inline-block:
+        border: 1px solid black;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    .button{
+        background-color: green;
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+        font-size: 16px;
+        margin: 20px 10px;
+        cursor: pointer;
+    }
+    .button1{
+        border-radius: 12px;
+    }
+</style>
+
+
+
+<div class = "song_form">
+    <form method = "POST" action = "" enctype = "multipart/form-data" id = "song_form">
+        {% csrf_token %}
+            <label for = "belonging_album">Album</label>
+            <select id = "albums" name = "albums">
+                <option value = {{album}}>{{album}}</option>
+            </select>
+            {{songform.as_p}}
+            {% comment %} <label for = "title">Title</label>
+            <input type = "text" id = "title" name = "title" placeholder = "Enter song name...">
+            <label for = "audio">Song</label>
+            <input type = "file" id = "audio" name = "audio"> {% endcomment %}
+            <button class = "button button1" type = "submit" form ="song_form" value = "Submit">Submit</button>
+    </form>
+</div>
+
+
+

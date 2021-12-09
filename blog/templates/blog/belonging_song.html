@@ -1,0 +1,95 @@
+{% extends 'blog/base.html' %}
+
+
+{% block content %}
+
+    {% if messages %}
+        {% for message in messages %}
+            {{message}}
+        {% endfor%}
+    {% endif %}
+
+    <style>
+        .container{
+            height: 100%;
+            width: 100%;
+            background-color:black; 
+        }
+        .logo_box{
+            margin: 5px 10px;
+            padding: 5px 5px;
+            width: 45%;
+            height: 350px;
+            float: left;
+            background-image: linear-gradient(to bottom right, red, yellow);
+            position: relative;
+        }
+        .logo_img{
+            positon: absolute;
+            margin: 10px 80px;
+            height: 150px;
+            width: 45%;
+        }
+
+        .name{
+            positon: absolute;
+            margin: 5px auto;
+        }
+
+        .album_name{
+            margin: 5px auto;
+            padding: 8px;
+            color: white;
+            background-color: green;
+        }
+        .song_list{
+            height: 100%;
+            margin: 5px 10px;
+            padding: 5px 5px;
+            width: 45%;
+            float: right;
+            background-image: linear-gradient(to bottom right, red, yellow);
+            position: relative;
+        }
+
+        .button{
+            width: 40%;
+            height: 30px;
+            margin: 10px 50px;
+            display: inline-block;
+            positon: absolute;
+            cursor: pointer;
+        }
+    </style>
+
+
+    <div class = "container">
+        {% for song in belonging_song %}
+
+            <div class = "logo_box">
+                <div class = "logo_img">
+                    <img src = "{{song.album.album_logo.url}}">
+                </div>
+                <div class = "name">
+                    <span class = "album_name">Album</span>
+                    {% comment %} <form action = "{% url 'my_playlist' %}" method = "POST">
+                        {% csrf_token %}
+                            <input type = "hidden" name = "albumid" value = "{{album.id}}">
+                            <button class = "button" type = "submit">Add To Playlist<button>
+
+                    </form>  {% endcomment %}
+                </div>
+            </div>
+            <div class = "song_list">
+                {{song.title}}
+                {{song.audio}}
+            </div>
+                
+        {% endfor %}
+    </div>
+
+{% endblock %}    
+    
+    
+    
+    

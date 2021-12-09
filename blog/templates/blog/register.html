@@ -1,0 +1,104 @@
+{% comment %} <form method = "POST" action = "" enctype = "multipart/form-data" id = "registration_form">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button class = "button button1" type = "submit" form = "registration_form" value = "Submit">Sign Up</button>
+
+</form> {% endcomment %}
+{% load static %}
+<html>
+    <head>
+        <title>Register</title>
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            .container{
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url("{% static 'blog/images/background-img1.jpg' %}");
+                background-position: center;
+                background-size: cover;
+                position: absolute;
+            }
+            .form-body{
+                height: 480px;
+                width: 380px;
+                positon: relative;
+                margin: 50px 10px 50px 900px;
+                padding: 5px;
+                background: transparent;
+            }
+            .button-box{
+                width: 200px;
+                height: 40px;
+                position: relative;
+                margin: 20px 110px;
+                border: 0;
+                outline: 0;
+            }
+            .toggle-btn{
+                padding: 10px 30px;
+                background: grey;
+                cursor: pointer;
+                position: relative;
+                border: 0;
+                outline: 0;
+                border-radius: 10px;
+            }
+            .input-group{
+                top:150px;
+                position: absolute;
+                width: 340px;
+                background: transparent;
+                margin: 0 10px;
+            }
+            .label-name{
+                color: white;
+            }
+            .input-field{
+                width: 100%;
+                margin: 10px 0;
+                border: 0;
+                outline: 0;
+                padding: 10px 0;
+                colour: white;
+                border-radius: 10px;
+            }
+            .button{
+                width: 100px;
+                height: 30px;
+                margin: 30px 0;
+                border: 0;
+                outline: 0;
+                border-radius: 10px;
+                display: inline-block;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div class = "container">
+            <div class = "form-body">
+                <div class = "button-box">
+                    <button type = "button" class = "toggle-btn">Register Form</button>
+                </div>
+                <form class = "input-group" method = "POST" action = "" id = "registerform">
+                    {% csrf_token %}
+                    <label class = "label-name" for = "username">Username</label>
+                    <input type = "text" class = "input-field" name = "username" placeholder = "Username">
+                    <br>
+                    <label class = "label-name" for = "email">Email address</label>
+                    <input type = "text" class = "input-field" name = "email" placeholder = "Email address">
+                    <br>
+                    <label class = "label-name" for "password1">Password</label>
+                    <input type = "password" class = "input-field" name = "password1" placehoder = "Password">
+                    <br>
+                    <label class = "label-name" for = "password2">Confirm Password</label>
+                    <input type = "password" class = "input-field" name = "password2" placeholder = "Retype password">
+                    <button class = "button" type = "submit" form = "registerform" value = "Submit">Sign Up</button>
+                </form>            
+            </div>
+        </div>
+    </body>
+</html>

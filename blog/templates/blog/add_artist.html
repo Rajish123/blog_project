@@ -1,0 +1,55 @@
+<style>
+  .artist_form{
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    transform: translate(50%, 50%);
+    width: 40%;
+    border-radius: 5px;
+    background-color: grey;
+    padding: 10px;
+  }
+  input[type=text]{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid black;
+    border-radius: 4px;
+    border-sizing: border-box;
+  }
+  .label_class{
+    padding: 10px;
+  }
+  .button{
+    background-color: black;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 20px 10px;
+    cursor: pointer;
+  }
+  .button1{
+    border-radius: 12px;
+  }
+</style>
+
+{% if messages %}
+  {% for message in messages %}
+    {{message}}
+  {% endfor%}
+{% endif %}
+
+<div class = "artist_form">
+    <form method = "POST" action = "#" enctype = "multipart/form-data" id = "artistform">
+        {% csrf_token %}
+          {{artistform.as_p}}
+        {% comment %} <label class = "label_class" for = {{artistform.name}}>Artist Name</label>
+        <input type = "text" id = "artistname" name = "artistname" placeholder = "Name">
+        <label class = "label_class" for = {{artistform.total_album}}>Total Albums</label>
+        <input type = "text" id = "totalalbum" name = "totalalbum" placeholder = "Total Album Released">{% endcomment %}
+          <button class = "button button1" type = "submit" form = "artistform" value = "Submit">Submit</button> 
+    </form>
+</div>

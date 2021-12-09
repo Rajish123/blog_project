@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<div class = "container">
+    {{album_info.artist.name}}
+    {{album_info.album_name}}
+    {{album_info.genre}}
+    {{album_info.producer}}
+    {{album_info.description}}
+    {{album_info.release_date}}
+
+</div>
+
+{% endblock %}    

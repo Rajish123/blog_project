@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<div class = "container">
+    {% for album in belonging_albums %}
+        <img src = "{{album.album_logo.url}}">
+        {{album.artist.name}}
+        {{album.album_name}}
+        {{album.genre}}
+        {{album.producer}}
+        
+    {% endfor %}
+</div>
+
+{% endblock %}    
+    
+    
+    
+    
+    
+    

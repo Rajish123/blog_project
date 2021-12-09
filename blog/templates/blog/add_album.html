@@ -1,0 +1,5 @@
+<form method = "POST" action = "" id = "album_form" enctype = "multipart/form-data">
+    {% csrf_token %}
+    {{albumform.as_p}}
+    <button class = "button" type = "submit" form = "album_form" value = "Submit">Submit</button>
+</form>

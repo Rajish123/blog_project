@@ -1,0 +1,80 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<style>
+    .container{
+        margin: 0;
+        padding: 0;
+    }
+    .AlbumList{
+        margin: 10px 5px;
+        padding: 5px 10px;
+        background: silver;
+        width: 40%;
+        height: 40%;
+        position: relative;
+        border-radius: 5px;
+    }
+    .album_logo{
+        height: 120px;
+        border: 0;
+        outline: 0;
+        text-align: center;
+        positon: relative;
+    }
+    .album_logo img{
+        height: 110px;
+        width: 100%;
+        margin: 5px auto;
+
+    }
+    .fig_caption{
+        height: 120px;
+        margin: 5px auto;
+        padding: 5px;
+        border: 1px solid black;
+        text-align: center;
+
+    }
+    .button {
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 8px 2px;
+            cursor: pointer;
+            background: green;
+}
+
+
+</style>
+
+<div class = "container">
+    {% for album in album_list %}
+        <div class = "AlbumList">
+            <div class = "album_logo">
+                <img src = "{{album.album_logo.url}}">
+            </div>
+            <div class = "fig_caption">
+                <figcaption><a href = "{% url 'album_song' album.id %}">{{album.album_name}}</a></figcaption>
+                <figcaption>{{album.artist.name}}</figcaption>
+                <form action = "/blog/myplaylist" method = "POST">
+                    {% csrf_token %}
+                    <input type = "hidden" name = "album_id" value = {{album.id}}>
+                    <button class = "button" type = "submit" value = "Submit">Add to Myplaylist</button>
+                </form>
+                {% comment %} <form action = "{% url 'my_albums' %}" method = "POST">
+                    {% csrf_token %}
+                        <input type = "hidden" name = "album_id" value = "{{album.id}}">
+                        <button class = "button" type = "submit" value = "Submit">Add to My Albums</button>
+                </form> {% endcomment %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

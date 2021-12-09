@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<div class = "container">
+    {% comment %} {% for artist in artist_detail %} {% endcomment %}
+        {{artist_info.name}}
+        {{artist_info.image.url}}
+    {% comment %} {% endfor %} {% endcomment %}
+</div>
+
+{% endblock %}

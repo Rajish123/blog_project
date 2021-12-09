@@ -1,0 +1,36 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<style>
+    .container{
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background: #ADD8E6;
+
+    }
+    .song_list{
+        width: 100%;
+        height: 100px;
+        padding: 10px;
+    }
+    .song_title{
+        background: #7FFD4;
+        margin: 5px auto;
+        height{}
+    }
+
+</style>
+
+<div class = "container">
+    {% for song in allsong %}
+        <div class = "song_list">
+            <div class = "song_title">
+                <li>{{song.title}}</li>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

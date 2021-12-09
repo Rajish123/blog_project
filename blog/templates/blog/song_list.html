@@ -1,0 +1,11 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<div class = "container">
+    {% for song in song_list %}
+        {{song.title}}
+    {% endfor %}
+</div>
+
+{% endblock %} 

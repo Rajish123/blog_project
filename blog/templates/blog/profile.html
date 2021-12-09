@@ -1,0 +1,33 @@
+<style>
+    .profile_pic{
+        border-radius:50%;
+        margin-left: auto;
+        margin-right: auto;
+        height: 100px;
+        width: 200px;
+    }
+    .profile_page h2{
+        text-align: left;
+    }
+
+</style>
+{% extends 'blog/base.html' %}
+
+
+{% block content %}
+
+    <div class = "profile_page">
+        <img class = "profile_pic" src = "{{user.profile.image.url}}" alt = "loading">
+        <h2>{{user.username}}</h2>
+        <h2>{{user.email}}</h2>
+    </div>
+
+    <div class = "update_pic">
+        <form method = "POST" action = "#" enctype = "multipart/form-data" id = "updateinfo">
+            {% csrf_token %}
+            {{user_update.as_p}}
+            {{profile_update.as_p}}
+            <button class = "button button1" type = "submit" form = "updateinfo" value = "Submit">Update</button>
+        </form>
+    </div>
+{% endblock %}
