@@ -44,7 +44,7 @@
     <div class = "artist_list">
         {% for artist in artist_list %}
             <div class = "img-container">
-                <img class = "artist_pic" src = "{{artist.image.url}}">
+                <a href = "{% url 'artist_album' artist.id %}"><img class = "artist_pic" src = "{{artist.image.url}}"></a>
                 <figcaption><a href = "{% url 'artist_album' artist.id  %}">{{artist}}</a></figcaption>
             </div>
         {% endfor %}

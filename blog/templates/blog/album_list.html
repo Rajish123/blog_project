@@ -1,5 +1,11 @@
 {% extends 'blog/base.html' %}
 
+{% if messages %}
+    {% for message in messages %}
+        {{message}}
+    {% endfor%}
+{% endif %}
+
 {% block content %}
 
 <style>
@@ -57,21 +63,21 @@
     {% for album in album_list %}
         <div class = "AlbumList">
             <div class = "album_logo">
-                <img src = "{{album.album_logo.url}}">
+                <a href = "{% url 'album_song' album.album_id %}"><img src = "{{album.album_logo.url}}"></a>
             </div>
             <div class = "fig_caption">
-                <figcaption><a href = "{% url 'album_song' album.id %}">{{album.album_name}}</a></figcaption>
+                <figcaption><a href = "{% url 'album_song' album.album_id %}">{{album.album_name}}</a></figcaption>
                 <figcaption>{{album.artist.name}}</figcaption>
-                <form action = "/blog/myplaylist" method = "POST">
+                <form action = "{% url 'add_myplaylist' %}" method = "POST">
                     {% csrf_token %}
-                    <input type = "hidden" name = "album_id" value = {{album.id}}>
-                    <button class = "button" type = "submit" value = "Submit">Add to Myplaylist</button>
+                        <input type = "hidden" name = "albumid" value = "{{album.album_id}}">
+                        <button class = "button" type = "submit" value = "Submit">Add to Myplaylist</button>
                 </form>
-                {% comment %} <form action = "{% url 'my_albums' %}" method = "POST">
+                <form action = "{% url 'vote' album.album_id %}" method = "POST">
                     {% csrf_token %}
-                        <input type = "hidden" name = "album_id" value = "{{album.id}}">
-                        <button class = "button" type = "submit" value = "Submit">Add to My Albums</button>
-                </form> {% endcomment %}
+                        <input type = "hidden" name = "vote" value = {{album.album_id}}>
+                        <button class = "button" type = "submit" value = "Submit">Like</button>
+                </form>
             </div>
         </div>
     {% endfor %}

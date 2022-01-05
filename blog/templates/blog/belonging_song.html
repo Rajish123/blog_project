@@ -72,17 +72,16 @@
                 </div>
                 <div class = "name">
                     <span class = "album_name">Album</span>
-                    {% comment %} <form action = "{% url 'my_playlist' %}" method = "POST">
-                        {% csrf_token %}
-                            <input type = "hidden" name = "albumid" value = "{{album.id}}">
-                            <button class = "button" type = "submit">Add To Playlist<button>
-
-                    </form>  {% endcomment %}
                 </div>
             </div>
             <div class = "song_list">
                 {{song.title}}
-                {{song.audio}}
+                <audio controls>
+                    <source src="{{song.audio.url}}" type="audio/ogg">
+                    <source src="horse.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
             </div>
                 
         {% endfor %}

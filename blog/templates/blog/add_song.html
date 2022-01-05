@@ -43,11 +43,10 @@
             <select id = "albums" name = "albums">
                 <option value = {{album}}>{{album}}</option>
             </select>
-            {{songform.as_p}}
-            {% comment %} <label for = "title">Title</label>
-            <input type = "text" id = "title" name = "title" placeholder = "Enter song name...">
-            <label for = "audio">Song</label>
-            <input type = "file" id = "audio" name = "audio"> {% endcomment %}
+            <label for = "title">Title</label>
+            <input type = "text" name = "title">
+            <label for="song">Select a song:</label>
+            <input type="file" id="song" name="song">
             <button class = "button button1" type = "submit" form ="song_form" value = "Submit">Submit</button>
     </form>
 </div>

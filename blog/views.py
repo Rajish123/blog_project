@@ -1,11 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.forms.models import model_to_dict
-
+from django.contrib.auth.decorators import user_passes_test
 from .forms import *
+from django.db.models import Case,When
 
 # Create your views here.
 def register(request):
@@ -15,7 +14,6 @@ def register(request):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             form.save()
-            # Profile.objects.create(user = request.user)
             messages.success(request,f"Account for {username} successfully created.")
             return redirect('login')
     else:
@@ -47,60 +45,63 @@ def home(request):
     return render(request,'blog/base.html')
 
 @login_required
+@user_passes_test(lambda u: u.is_superuser)
 def add_artist(request):
     context = {}
     if request.method == "POST":
         artistform = ArtistForm(request.POST, request.FILES)
         if artistform.is_valid():
             artistform.save()
+            messages.success(request, "Added successfully")
+            return redirect('home')
     else:
         artistform = ArtistForm()
     context['artistform'] = artistform
     return render(request,'blog/add_artist.html',context)
 
 @login_required
+@user_passes_test(lambda u: u.is_superuser)
 def add_album(request):
     context = {}
     if request.method == "POST":
         albumform = AlbumForm(request.POST, request.FILES)
         if albumform.is_valid():
             albumform.save()
+            messages.success(request, "Added successfully")
+            return redirect('home')
     else:
         albumform = AlbumForm()
     context['albumform'] = albumform
     return render(request,'blog/add_album.html',context)
 
 @login_required
-def add_song(request,id):
+@user_passes_test(lambda u: u.is_superuser)
+def add_song(request,album_id):
     context = {}
-    album = get_object_or_404(Album,id =id)
+    album = get_object_or_404(Album,album_id =album_id)
     if request.method == "POST":
-        songform = SongForm(request.POST, request.FILES, instance=album)
+        songform = SongForm(request.POST, request.FILES)
         if songform.is_valid():
             songform.save()
             messages.success(request, "Added successfully")
             return redirect('home')
     else:
         songform = SongForm(instance=album)
-    context['album'] = album
-    context['songform'] = songform
+    context = {'album' : album, 'songform' : songform}
     return render(request,'blog/add_song.html',context)
 
-@login_required
 def artist_list(request):
     context = {}
     artistlist = Artist.objects.all()
     context['artist_list'] = artistlist
     return render(request,'blog/artist_list.html', context)
 
-@login_required
 def album_list(request):
     context = {}
     allalbum = Album.objects.all()
     context['album_list'] = allalbum
     return render(request, 'blog/album_list.html', context)
 
-@login_required 
 def song_list(request):
     allsong = Song.objects.all()
     return render(request, 'blog/song_list.html', {'song_list': allsong})
@@ -129,31 +130,61 @@ def belonging_album(request, id):
     return render(request, 'blog/belonging_album.html',context)
 
 @login_required 
-def belonging_song(request,id):
+def belonging_song(request,album_id):
     context = {}
-    album = get_object_or_404(Album,id = id)
+    album = get_object_or_404(Album,album_id = album_id)
     song_list = album.song_set.all()
     context['belonging_song'] = song_list
     return render(request, 'blog/belonging_song.html', context)
 
 @login_required
-def my_playlist(request):
+def add_to_my_playlist(request):
     if request.method == "POST":
-        user = request.user
-        album_id = request.POST['album_id']
-        my_playlist = MyPlaylist.objects.filter(user = user)
+        album_id = request.POST['albumid']
+        my_playlist = MyPlaylist.objects.filter(user = request.user)
         for i in my_playlist:
             if album_id == i.album_id:
                 messages.info(request,"This album is already on your playlist")
                 break
-            else:
-                playlist = MyPlaylist(user = user, album_id = album_id)
-                playlist.save()
-                messages.success(request,"Added to my albums")
-                return redirect("/blog/album_list")
-    return render(request, 'blog/myalbums.html')
+        else:
+            playlist = MyPlaylist(user = request.user, album_id = album_id)
+            playlist.save()
+            messages.success(request,"Added to my albums")
+            return redirect("/blog/album_list")
+    return render(request, 'blog/album_list.html')
+
+@login_required
+def my_playlist(request):
+    my_playlist = MyPlaylist.objects.filter(user = request.user)        
+    ids = []
+    for i in my_playlist:
+        ids.append(i.album_id)
+    # display ablum according to the time when added
+    preserved = Case(*[When(pk = pk, then = pos) for pos, pk in enumerate(ids)])
+    album = Album.objects.filter(album_id__in = ids).order_by(preserved)
+    return render(request, 'blog/myplaylist.html',{'myalbum':album})
+
+@login_required
+def vote(request,album_id):
+    album = get_object_or_404(Album,album_id = album_id)
+    album.votes += 1
+    album.save()
+    messages.success(request,"You liked this album.")
+    return redirect('albumlist')
 
 
+
+
+# necessary information doesnot show in my playlist because no relationship between myplaylist and album
+# to show details of albums in myalbums page there should be link between albums and myplaylist
+
+# possible solution
+    # get album_id from my playlist
+    # filter albums on the base of album_id which we get from myplaylist
+    # show the albums we get in album_list page
+    # album_id = request.GET['album_id']
+
+# song form doesnt save song
 
     
 

@@ -13,15 +13,17 @@ urlpatterns = [
     path('', views.home, name = 'home'),
     path('add_artist',views.add_artist,name='add_artist'),
     path('add_album',views.add_album, name = "add_album"),
-    path('add_song/<str:id>', views.add_song, name = "add_song"),
+    path('add_song/<str:album_id>', views.add_song, name = "add_song"),
     path("artist_list", views.artist_list, name = "artistlist"),
     path('album_list', views.album_list, name = "albumlist"),
     path('song_list', views.song_list, name = "songlist"),
     path("artist_detail/<str:id>", views.artist_detail, name = "artistdetail"),
     path('album_detail/<str:id>', views.album_detail, name = 'albumdetail'),
     path('artist/album/<str:id>', views.belonging_album, name = 'artist_album'),
-    path('album/song/<str:id>', views.belonging_song, name = 'album_song'),
-    path("myplaylist", views.my_playlist, name = "my_playlist" )
+    path('album/song/<str:album_id>', views.belonging_song, name = 'album_song'),
+    path("save_myplaylist", views.add_to_my_playlist, name = "add_myplaylist" ),
+    path('myplaylist', views.my_playlist, name = 'myplaylist'),
+    path('vote/<str:album_id>',views.vote,name = "vote"),
 
 ]
 

@@ -2,6 +2,54 @@
 
 {% block content %}
 
-<h1>My playlist</h1>
+<style>
+    .container{
+        margin: 0;
+        padding: 0;
+    }
+    .AlbumList{
+        margin: 10px 5px;
+        padding: 5px 10px;
+        background: silver;
+        width: 40%;
+        height: 40%;
+        position: relative;
+        border-radius: 5px;
+    }
+    .album_logo{
+        height: 120px;
+        border: 0;
+        outline: 0;
+        text-align: center;
+        positon: relative;
+    }
+    .album_logo img{
+        height: 110px;
+        width: 100%;
+        margin: 5px auto;
+
+    }
+    .fig_caption{
+        height: 120px;
+        margin: 5px auto;
+        padding: 5px;
+        border: 1px solid black;
+        text-align: center;
+
+    }
+</style>
+
+    <div class = "container">
+        {% for albums in myalbum %}
+            <div class = "AlbumList">
+                <div class = "album_logo">
+                    <a href = "{% url 'album_song' albums.album_id %}"><img src = "{{albums.album_logo.url}}"></a>
+                </div>
+                <div class = "fig_caption">
+                    <figcaption><a href = "{% url 'album_song' albums.album_id %}">{{albums.album_name}}</a></figcaption>
+                    <figcaption>{{album.artist.name}}</figcaption>
+                </div>
+            </div>
+        {% endfor %}
 
 {% endblock %} 
